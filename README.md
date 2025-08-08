@@ -1,6 +1,6 @@
 # 🎼 Vocal-MIDI Aligner
 **vocal-midi-aligner** is a Python library for aligning sung vocal pitch contours (from `.wav` files) with symbolic note sequences (from `.mid` files).  
-It improves upon traditional DTW (Dynamic Time Warping) by incorporating additional features like note duration, silence handling, and unvoiced penalties for more accurate alignment.
+It improves upon traditional DTW (Dynamic Time Warping) by incorporating additional features like note duration, silence handling, and unvoiced penalties for more accurate alignment. Unlike standard DTW, this allows multiple vocal frames to align with a single note. This leads to a multi-step DTW formulation that better reflects the temporal structure of singing.
 
 ---
 
@@ -56,3 +56,28 @@ plt.plot(aligned_note_pitch, label="Aligned Note Pitch")
 plt.legend()
 plt.show()
 ```
+
+---
+
+## Results
+
+Below are comparisons between standard single-step DTW and duration-aware multi-step DTW on three vocal samples.
+
+### 샘플 1
+| (1) Before Alignment | (2) Standard DTW (Single-step) Result | (3) Multi-step DTW |
+|:-----------:|:-----------------:|:-------------------:|
+| ![Before Align - Sample 1](images/before_align1.png) | ![Single-step DTW Result - Sample 1](images/standard_dtw_result1.png) | ![Proposed Method Result - Sample 1](images/ours_dtw_result1.png) |
+
+---
+
+### 샘플 2
+| (1) Before Alignment | (2) Standard DTW (Single-step) Result | (3) Multi-step DTW |
+|:-----------:|:-----------------:|:-------------------:|
+| ![Before Align - Sample 2](images/before_align2.png) | ![Single-step DTW Result - Sample 2](images/standard_dtw_result2.png) | ![Proposed Method Result - Sample 2](images/ours_dtw_result2.png) |
+
+---
+
+### 샘플 3
+| (1) Before Alignment | (2) Standard DTW (Single-step) Result | (3) Multi-step DTW |
+|:-----------:|:-----------------:|:-------------------:|
+| ![Before Align - Sample 3](images/before_align3.png) | ![Single-step Result - Sample 3](images/standard_dtw_result3.png) | ![Proposed Method Result - Sample 3](images/ours_dtw_result3.png) |
