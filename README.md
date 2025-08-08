@@ -34,6 +34,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 from aligner.vocal_note_align import VocalNoteAlign
+from utils import read_wav, expand_seq, extract_f0, hz_to_midi
 
 wav_path = "YOUR_WAV_FILE_PATH"
 midi_path = "YOUR_MIDI_FILE_PATH"
@@ -48,8 +49,13 @@ aligner = VocalNoteAlign(
 )
 
 # Perform alignment
-vocal_pitch, aligned_note_pitch = aligner.multi_process_run(wav_path, midi_path)
+note_pitch, note_duration, *_ = aligner(wav_path, midi_path)
+aligned_note_pitch = expand_seq(note_pitch, note_duration)
 
+
+# Visualize
+wav = read_wav(wav_path, normalize=True)
+vocal_pitch = hz_to_midi(extract_f0(wav, 22050, 256))
 plt.title("Vocal Pitch and Aligned Note Pitch")
 plt.plot(vocal_pitch, label="Vocal Pitch")
 plt.plot(aligned_note_pitch, label="Aligned Note Pitch")
