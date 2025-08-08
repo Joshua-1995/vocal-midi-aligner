@@ -84,11 +84,6 @@ Below are comparisons between standard single-step DTW and duration-aware multi-
 
 ---
 
-## ✅ Datasets Used for Evaluation
+## ✅ Compatibility
 
-This method has been tested on Korean singing voice datasets, including:
-
-- [AI-Hub Multi-Singer Singing Voice Dataset (Dataset #465)](https://www.aihub.or.kr/aihubdata/data/view.do?currMenu=115&topMenu=100&dataSetSn=465)
-- [AI-Hub Singing Voice with Score Alignment Dataset (Dataset #473)](https://www.aihub.or.kr/aihubdata/data/view.do?currMenu=115&topMenu=100&dataSetSn=473)
-
-While I tested the method on Korean singing data, the method is generally applicable to any **monophonic singing voice** paired with a **MIDI score**.  
+While the method was tested only on Korean singing data, it is generally applicable to any **monophonic singing voice** paired with a **MIDI score**.
