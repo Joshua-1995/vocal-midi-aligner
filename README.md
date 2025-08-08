@@ -92,7 +92,6 @@ Below are comparisons between standard single-step DTW and duration-aware multi-
 
 While the method was tested only on Korean singing data, it is generally applicable to any **monophonic singing voice** paired with a **MIDI score**.
 
-## 🤝 Contributing
+## 🤝 Your contributions are greatly appreciated!
 
 Welcome any feedback, bug reports, or suggestions for improvement.
-Feel free to open an issue or submit a pull request. Your contributions are greatly appreciated!
