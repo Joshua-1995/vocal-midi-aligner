@@ -1,6 +1,6 @@
 # 🎼 Vocal-MIDI Aligner
 **vocal-midi-aligner** is a Python library for aligning sung vocal pitch contours (from `.wav` files) with symbolic note sequences (from `.mid` files).  
-It improves upon traditional DTW (Dynamic Time Warping) by incorporating additional features like note duration, silence handling, and unvoiced penalties for more accurate alignment.
+It improves upon traditional DTW (Dynamic Time Warping) by incorporating additional features like note duration, silence handling, and unvoiced penalties for more accurate alignment. Unlike standard DTW, this allows multiple vocal frames to align with a single note. This leads to a multi-step DTW formulation that better reflects the temporal structure of singing.
 
 ---
 
@@ -34,13 +34,14 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 from aligner.vocal_note_align import VocalNoteAlign
+from utils import read_wav, expand_seq, extract_f0, hz_to_midi
 
 wav_path = "YOUR_WAV_FILE_PATH"
 midi_path = "YOUR_MIDI_FILE_PATH"
 
 # Create the aligner object
 aligner = VocalNoteAlign(
-    lambda_pitch=3,       # Weight for pitch difference
+    lambda_pitch=5,       # Weight for pitch difference
     lambda_duration=0.1,  # Weight for duration mismatch
     lambda_unvoiced=20,   # Penalty for unvoiced/silence mismatch
     sampling_rate=22050,
@@ -48,11 +49,47 @@ aligner = VocalNoteAlign(
 )
 
 # Perform alignment
-vocal_pitch, aligned_note_pitch = aligner.multi_process_run(wav_path, midi_path)
+note_pitch, note_duration, *_ = aligner(wav_path, midi_path)
+aligned_note_pitch = expand_seq(note_pitch, note_duration)
 
+
+# Visualize
+wav = read_wav(wav_path, normalize=True)
+vocal_pitch = hz_to_midi(extract_f0(wav, 22050, 256))
 plt.title("Vocal Pitch and Aligned Note Pitch")
 plt.plot(vocal_pitch, label="Vocal Pitch")
 plt.plot(aligned_note_pitch, label="Aligned Note Pitch")
 plt.legend()
 plt.show()
 ```
+
+---
+
+## Results
+
+Below are comparisons between standard single-step DTW and duration-aware multi-step DTW on three vocal samples.
+
+### Sample 1
+| (1) Before Alignment | (2) Standard DTW (Single-step) Result | (3) Multi-step DTW |
+|:-----------:|:-----------------:|:-------------------:|
+| ![Before Align - Sample 1](images/before_align1.png) | ![Single-step DTW Result - Sample 1](images/standard_dtw_result1.png) | ![Proposed Method Result - Sample 1](images/ours_dtw_result1.png) |
+
+---
+
+### Sample 2
+| (1) Before Alignment | (2) Standard DTW (Single-step) Result | (3) Multi-step DTW |
+|:-----------:|:-----------------:|:-------------------:|
+| ![Before Align - Sample 2](images/before_align2.png) | ![Single-step DTW Result - Sample 2](images/standard_dtw_result2.png) | ![Proposed Method Result - Sample 2](images/ours_dtw_result2.png) |
+
+---
+
+### Sample 3
+| (1) Before Alignment | (2) Standard DTW (Single-step) Result | (3) Multi-step DTW |
+|:-----------:|:-----------------:|:-------------------:|
+| ![Before Align - Sample 3](images/before_align3.png) | ![Single-step Result - Sample 3](images/standard_dtw_result3.png) | ![Proposed Method Result - Sample 3](images/ours_dtw_result3.png) |
+
+---
+
+## ✅ Compatibility
+
+While the method was tested only on Korean singing data, it is generally applicable to any **monophonic singing voice** paired with a **MIDI score**.
