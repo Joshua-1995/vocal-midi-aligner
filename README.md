@@ -40,7 +40,7 @@ midi_path = "YOUR_MIDI_FILE_PATH"
 
 # Create the aligner object
 aligner = VocalNoteAlign(
-    lambda_pitch=3,       # Weight for pitch difference
+    lambda_pitch=5,       # Weight for pitch difference
     lambda_duration=0.1,  # Weight for duration mismatch
     lambda_unvoiced=20,   # Penalty for unvoiced/silence mismatch
     sampling_rate=22050,
