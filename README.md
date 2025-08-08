@@ -32,15 +32,13 @@ pip install -r requirements.txt
 ```python
 import numpy as np
 import matplotlib.pyplot as plt
-
-from aligner.vocal_note_align import VocalNoteAlign
-from utils import read_wav, expand_seq, extract_f0, hz_to_midi
+from aligner import VocalNoteAlign, extract_f0, hz_to_midi, read_wav, expand_seq
 
 wav_path = "YOUR_WAV_FILE_PATH"
 midi_path = "YOUR_MIDI_FILE_PATH"
 
 # Create the aligner object
-aligner = VocalNoteAlign(
+_aligner = VocalNoteAlign(
     lambda_pitch=5,       # Weight for pitch difference
     lambda_duration=0.1,  # Weight for duration mismatch
     lambda_unvoiced=20,   # Penalty for unvoiced/silence mismatch
@@ -49,7 +47,7 @@ aligner = VocalNoteAlign(
 )
 
 # Perform alignment
-note_pitch, note_duration, *_ = aligner(wav_path, midi_path)
+note_pitch, note_duration, *_ = _aligner(wav_path, midi_path)
 aligned_note_pitch = expand_seq(note_pitch, note_duration)
 
 
@@ -93,3 +91,9 @@ Below are comparisons between standard single-step DTW and duration-aware multi-
 ## ✅ Compatibility
 
 While the method was tested only on Korean singing data, it is generally applicable to any **monophonic singing voice** paired with a **MIDI score**.
+
+## 🤝 Contributing
+
+Welcome any feedback, bug reports, or suggestions for improvement.
+Feel free to open an issue or submit a pull request.  
+Your contributions are greatly appreciated!
