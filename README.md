@@ -95,5 +95,4 @@ While the method was tested only on Korean singing data, it is generally applica
 ## 🤝 Contributing
 
 Welcome any feedback, bug reports, or suggestions for improvement.
-Feel free to open an issue or submit a pull request.  
-Your contributions are greatly appreciated!
+Feel free to open an issue or submit a pull request. Your contributions are greatly appreciated!
